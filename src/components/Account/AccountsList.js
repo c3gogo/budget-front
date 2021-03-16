@@ -10,7 +10,7 @@ export default function AccountsList(props) {
           props.categories.map(category => {
             return (
               <Grid item xs={3}>
-                <Account category={category} record={category.records[0]}/>
+                <Account category={category} record={category.records.length ? category.records[0]: null}/>
               </Grid>
             )
           })
