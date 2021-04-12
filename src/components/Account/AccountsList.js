@@ -8,9 +8,10 @@ export default function AccountsList(props) {
       <Grid container spacing={3}>
         {
           props.categories.map(category => {
+            console.log(category)
             return (
               <Grid item xs={3}>
-                <Account category={category} record={category.records.length ? category.records[0]: null}/>
+                <Account key={category.id} category={category} record={category.records.length ? category.records[0]: null}/>
               </Grid>
             )
           })

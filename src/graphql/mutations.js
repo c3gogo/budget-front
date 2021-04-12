@@ -28,7 +28,37 @@ const DELETE_ACCOUNT = gql`
   }
 `
 
+const ADD_RECORD = gql`
+  mutation createRecord($value: Float!, $categoryId: ID!) {
+    createRecord(value: $value, categoryId: $categoryId) {
+      id,
+      value,
+      timestamp,
+      category {
+        id,
+        name
+      }
+    }
+  }
+`
+
+const DELETE_RECORD = gql`
+  mutation deleteRecord($id: ID!) {
+    deleteRecord(id: $id) {
+      id,
+      value,
+      timestamp,
+      category {
+        id,
+        name
+      }
+    }
+  }
+`
+
 export {
   ADD_ACCOUNT,
-  DELETE_ACCOUNT
+  DELETE_ACCOUNT,
+  ADD_RECORD,
+  DELETE_RECORD
 }

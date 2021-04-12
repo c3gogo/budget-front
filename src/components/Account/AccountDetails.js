@@ -6,17 +6,18 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
-import { GET_ACCOUNT } from './../../graphql/queries'
+import { GET_ACCOUNT, GET_ACCOUNTS } from './../../graphql/queries'
+import { ADD_RECORD } from './../../graphql/mutations'
 import TextField from '@material-ui/core/TextField'
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 
 import { makeStyles } from '@material-ui/core/styles'
 
-import { useQuery } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 
-import RecordsList from './../Record/RecordsList'
+import RecordsTable from '../Record/RecordsTable'
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -29,9 +30,11 @@ const useStyles = makeStyles((theme) => ({
 export default function AccountDetails() {
   const classes = useStyles()
   const { accountId } = useParams()
-  const { loading, err, data } = useQuery(GET_ACCOUNT, { variables: {
+  const { data } = useQuery(GET_ACCOUNT, { variables: {
     id: accountId
   }})
+  const [addRecord] = useMutation(ADD_RECORD, { refetchQueries: [{ query: GET_ACCOUNTS }] })
+
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState()
   const handleOpenModal = () => {
@@ -44,6 +47,8 @@ export default function AccountDetails() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log(typeof accountId)
+    addRecord({ variables: { value: parseFloat(value), categoryId: accountId }})
     setValue()
     setOpen(false)
   }
@@ -51,9 +56,9 @@ export default function AccountDetails() {
     <div>
       <CssBaseline />
       <Container fixed>
-        <RecordsList records={data ? data.category.records : []} />
+        <RecordsTable records={data ? data.category.records : []} />
          <Dialog open={open} onClose={handleCloseModal} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Add an account</DialogTitle>
+          <DialogTitle id="form-dialog-title">Add a record</DialogTitle>
           <DialogContent>
             <TextField autoFocus margin="dense" id="value" label="Value" type="number" fullWidth onChange={(e) => setValue(e.target.value)} value={value} />
           </DialogContent>

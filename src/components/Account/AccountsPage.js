@@ -39,7 +39,7 @@ export default function AccountsPage() {
   const [open, setOpen] = useState(false)
   const [name, setName] = useState("")
   const { loading, error, data } = useQuery(GET_ACCOUNTS)
-  const [addAccount, { newAccount }] = useMutation(ADD_ACCOUNT, { refetchQueries: [{ query: GET_ACCOUNTS }] })
+  const [addAccount] = useMutation(ADD_ACCOUNT, { refetchQueries: [{ query: GET_ACCOUNTS }] })
   const handleOpenModal = () => {
     setOpen(true)
   }

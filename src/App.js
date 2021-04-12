@@ -31,6 +31,7 @@ const client = new ApolloClient({
 
 function App() {
   const classes = useStyles()
+  const Location = 'Home'
   return (
     <ApolloProvider client={client}>
       <div className="App">
@@ -41,7 +42,7 @@ function App() {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" className={classes.title}>
-                Accounts
+                {Location}
               </Typography>
               <Button color="inherit">Login</Button>
             </Toolbar>
