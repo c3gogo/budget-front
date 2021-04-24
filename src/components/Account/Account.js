@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Account(props) {
   const classes = useStyles()
   const [deleteAccount, { deletedAccount }] = useMutation(DELETE_ACCOUNT, { refetchQueries: [{ query: GET_ACCOUNTS }] })
-  console.log(props)
 
   return (
     <Card className={classes.card}>

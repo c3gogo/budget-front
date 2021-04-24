@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AccountDetails() {
   const classes = useStyles()
   const { accountId } = useParams()
+  console.log(accountId)
   const { data } = useQuery(GET_ACCOUNT, { variables: {
     id: accountId
   }})
@@ -47,7 +48,6 @@ export default function AccountDetails() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(typeof accountId)
     addRecord({ variables: { value: parseFloat(value), categoryId: accountId }})
     setValue()
     setOpen(false)

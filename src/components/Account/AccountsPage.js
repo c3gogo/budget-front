@@ -3,9 +3,8 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import MuiAlert from '@material-ui/lab/Alert'
-import { useQuery, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import AccountsList from './AccountsList'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -34,11 +33,10 @@ const useStyles = makeStyles((theme) => ({
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />
 }
-export default function AccountsPage() {
+export default function AccountsPage(props) {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [name, setName] = useState("")
-  const { loading, error, data } = useQuery(GET_ACCOUNTS)
   const [addAccount] = useMutation(ADD_ACCOUNT, { refetchQueries: [{ query: GET_ACCOUNTS }] })
   const handleOpenModal = () => {
     setOpen(true)
@@ -60,17 +58,7 @@ export default function AccountsPage() {
       <CssBaseline />
       <Container fixed>
         {
-          loading ? (
-            <CircularProgress />
-          ) : null
-        }
-        {
-          error ? (
-            <Alert severity="error">{error.message}</Alert>
-          ) : null
-        }
-        {
-          data ? <AccountsList categories={data.categories} /> : null
+          props.accounts ? <AccountsList categories={props.accounts} /> : null
         }
         <Dialog open={open} onClose={handleCloseModal} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Add an account</DialogTitle>

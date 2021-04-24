@@ -49,7 +49,7 @@ export default function RecordsTable(props) {
                 <TableCell>{row.value}</TableCell>
                 <TableCell>{new Date(row.date).toLocaleDateString()}</TableCell>
                 <TableCell>
-                  <Button size="small" color="red" onClick={() => deleteRecord({variables: { id: row.id }})}>
+                  <Button size="small" color="secondary" onClick={() => deleteRecord({variables: { id: row.id }})}>
                     <DeleteIcon />
                     Delete
                   </Button>
