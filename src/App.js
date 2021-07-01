@@ -17,6 +17,7 @@ import { ExpandLess, ExpandMore, Home, AccountBalanceWallet, Euro, Timeline } fr
 
 import { GET_ACCOUNTS } from './graphql/queries'
 import { useQuery } from '@apollo/client'
+import SituationsPage from './components/Situation/SituationsPage'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,7 +60,6 @@ const IndexPage = () => {
   const classes = useStyles()
   const [isDrawerDisplayed, setIsDrawerDisplayed] = useState(false)
   const [openCollapseAccounts, setOpenCollapseAccounts] = useState(false)
-  const [openCollapseSituations, setOpenCollapseSituations] = useState(false)
 
   const { loading, error, data } = useQuery(GET_ACCOUNTS)
 
@@ -103,32 +103,14 @@ const IndexPage = () => {
             }
           </List>
         </Collapse>
-
-        <ListItem button onClick={(e) => {
-          e.stopPropagation()
-          setOpenCollapseSituations(!openCollapseSituations)
-        }}>
-            <ListItemIcon>
-              <Euro fontSize='small'/>
-            </ListItemIcon>
-            <ListItemText primary={'Situations'} />
-            {openCollapseSituations ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={openCollapseSituations} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {
-              data ? data.categories.map(category => {
-                return (
-                  <Link to={`/situations/${category.id}`} className={classes.link} >
-                    <ListItem button className={classes.nested}>
-                        <ListItemText primary={category.name} />
-                    </ListItem>
-                  </Link>
-                )
-              }) : null
-            }
-          </List>
-        </Collapse>
+        <Link to={`/situations`} className={classes.link} >
+          <ListItem button >
+              <ListItemIcon>
+                <Euro fontSize='small'/>
+              </ListItemIcon>
+              <ListItemText primary={'Situations'} />
+          </ListItem>
+        </Link>
         <Link to={`/`} className={classes.link}>
           <ListItem button>
             <ListItemIcon>
@@ -164,6 +146,9 @@ const IndexPage = () => {
           </Route>
           <Route path="/accounts/:accountId">
             <AccountDetails />
+          </Route>
+          <Route path="/Situations">
+            {data ? <SituationsPage accounts={data.categories} /> : null}
           </Route>
         </Switch>
     </div>

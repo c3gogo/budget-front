@@ -27,7 +27,25 @@ const GET_ACCOUNT = gql`
   }
 `
 
+const GET_SITUATIONS = gql`
+  query GetSituations {
+      situations {
+      id
+      timestamp
+      timestampStart
+      timestampEnd
+      value
+      categories {
+        id
+        name
+      }
+    }
+  }
+`
+
+
 export {
   GET_ACCOUNTS,
-  GET_ACCOUNT
+  GET_ACCOUNT,
+  GET_SITUATIONS
 }

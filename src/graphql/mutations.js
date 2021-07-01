@@ -32,10 +32,10 @@ const ADD_RECORD = gql`
   mutation createRecord($value: Float!, $categoryId: ID!) {
     createRecord(value: $value, categoryId: $categoryId) {
       id,
-      value,
-      timestamp,
+      value
+      timestamp
       category {
-        id,
+        id
         name
       }
     }
@@ -46,19 +46,51 @@ const DELETE_RECORD = gql`
   mutation deleteRecord($id: ID!) {
     deleteRecord(id: $id) {
       id,
-      value,
-      timestamp,
+      value
+      timestamp
       category {
-        id,
+        id
+        name
+      }
+    }
+  }
+`
+const ADD_SITUATION = gql`
+  mutation createSituation($startDate: ISODate!, $endDate: ISODate!, $categories: [ID!]!) {
+    createSituation(startDate: $startDate, endDate: $endDate, categories: $categories) {
+      id
+      timestampStart
+      timestampEnd
+      timestamp
+      value
+      categories {
+        id
         name
       }
     }
   }
 `
 
+const DELETE_SITUATION = gql`
+  mutation deleteSituation($id: ID!) {
+    deleteSituation(id: $id) {
+      id
+      timestampStart
+      timestampEnd
+      timestamp
+      value
+      categories {
+        id
+        name
+      }
+    }
+  }
+`
 export {
   ADD_ACCOUNT,
   DELETE_ACCOUNT,
   ADD_RECORD,
-  DELETE_RECORD
+  DELETE_RECORD,
+  ADD_SITUATION,
+  DELETE_SITUATION
 }
